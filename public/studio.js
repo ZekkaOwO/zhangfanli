@@ -16,7 +16,7 @@ function run(raw) {
   }
   const replies = {
     help: "whoami · ls · photos · music · github · clear\nTip: ↑ and ↓ recall your commands.",
-    whoami: "Fanli / Software engineer\nOff the keyboard: photography & music.",
+    whoami: "Zhangfan Li / Software engineer\nOff the keyboard: photography & music.",
     ls: "about.pseudo\nphotography/\nmusic/",
     photos: "Opening photography/ …",
     music: "Opening music/ …",
