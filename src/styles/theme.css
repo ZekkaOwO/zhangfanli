@@ -1,0 +1,167 @@
+/* Theme surfaces retain the studio's botanical and warm music palette. */
+:root {
+  color-scheme: light;
+  --theme-paper: #f1f0e9ed;
+  --theme-card: #faf9f0d9;
+  --theme-text: #364033;
+  --theme-muted: #727b68;
+  --theme-border: #c6cbbb;
+  --theme-hover: #e0e3d7;
+  --theme-panel: #f1f0e9;
+  --theme-music: #e7e0d3;
+  --theme-warm-text: #786d5e;
+  --theme-warm-border: #c7baa5;
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --theme-paper: #18231df5;
+  --theme-card: #222e25ed;
+  --theme-text: #e3e8d8;
+  --theme-muted: #acb8a4;
+  --theme-border: #4c5c4c;
+  --theme-hover: #344536;
+  --theme-panel: #222e25;
+  --theme-music: #302b24;
+  --theme-warm-text: #c9baa5;
+  --theme-warm-border: #6a5b48;
+}
+.brand-name {
+  grid-area: name;
+  justify-self: start;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.theme-toggle {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--theme-text);
+}
+.theme-toggle svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+.theme-toggle:hover {
+  background: var(--theme-hover);
+}
+.theme-sun,
+[data-theme="dark"] .theme-moon {
+  display: none;
+}
+[data-theme="dark"] .theme-sun {
+  display: block;
+}
+body {
+  color: var(--theme-text);
+}
+header,
+main,
+footer {
+  background: var(--theme-paper);
+}
+.codeintro {
+  background: var(--theme-card);
+}
+.weather-control,
+.cv-dialog {
+  color: var(--theme-text);
+}
+.weather-trigger,
+.weather-panel,
+.cv-dialog {
+  background: var(--theme-panel);
+}
+.listening {
+  background: var(--theme-music);
+}
+[data-theme="dark"] .codeintro,
+[data-theme="dark"] .file,
+[data-theme="dark"] .sectiontop,
+[data-theme="dark"] .closing,
+[data-theme="dark"] .cv-dialog-header,
+[data-theme="dark"] .weather-trigger,
+[data-theme="dark"] .weather-panel,
+[data-theme="dark"] .weather-options button {
+  border-color: var(--theme-border);
+}
+[data-theme="dark"] .sectiontop .codeheading {
+  color: var(--theme-text);
+}
+[data-theme="dark"]
+  :is(
+    .branch,
+    .eyebrow,
+    .file,
+    .comment,
+    .sectiontop p,
+    footer,
+    .codeheading .punctuation
+  ) {
+  color: var(--theme-muted);
+}
+[data-theme="dark"] :is(.string, .codeheading .namespace) {
+  color: #b2ce98;
+}
+[data-theme="dark"] :is(.keyword, .musicsection .codeheading .namespace) {
+  color: #dfac86;
+}
+[data-theme="dark"]
+  :is(.listening p, .deckcaption, .playrow span, .volume-control, .moods button, .play) {
+  color: var(--theme-warm-text);
+}
+[data-theme="dark"] :is(.listening, .deck, .moods, .moods button, .play) {
+  border-color: var(--theme-warm-border);
+}
+[data-theme="dark"] .moods button[aria-pressed="true"] {
+  background: #80543b;
+  color: #fff3df;
+  border-color: #c99772;
+}
+[data-theme="dark"]
+  :is(
+    .cv-trigger:hover,
+    .linkedin-link[href]:hover,
+    .github-link:hover,
+    .cv-close:hover,
+    .weather-trigger:hover,
+    .weather-panel-heading button:hover,
+    .weather-options button[aria-pressed="false"]:hover
+  ) {
+  background: var(--theme-hover);
+}
+[data-theme="dark"] .weather-options button[aria-pressed="true"] {
+  background: #3f5843;
+  border-color: #9bb88b;
+}
+[data-theme="dark"] .botanical-backdrop {
+  opacity: 0.6;
+}
+[data-theme="dark"] .skip-link {
+  background: var(--theme-panel);
+  color: var(--theme-text);
+}
+[data-theme="dark"] :focus-visible {
+  outline-color: #e3b17e;
+}
+[data-theme="dark"] .weather-control button:focus-visible {
+  outline-color: #e3b17e;
+}
+[data-theme="dark"] body[data-weather="sun"] .botanical-backdrop {
+  filter: brightness(0.7) saturate(0.62) hue-rotate(12deg);
+}
+[data-theme="dark"] body[data-weather="sun"] .sky-tint {
+  background: radial-gradient(ellipse at 15% 12%, #aac5e833, transparent 66%);
+}
+@media (max-width: 480px) {
+  .brand-name {
+    justify-self: center;
+  }
+}

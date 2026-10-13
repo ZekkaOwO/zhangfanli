@@ -2,6 +2,7 @@
   const canvas = document.querySelector("#weather-canvas"),
     ctx = canvas.getContext("2d");
   const modes = ["sun", "rain", "snow", "fog"];
+  let dark = document.documentElement.dataset.theme === "dark";
   let w = 0,
     h = 0,
     sizeScale = 1,
@@ -95,8 +96,9 @@
         sunY,
         sunRadius,
       );
-      sunlight.addColorStop(0, "rgba(216,172,88,0.2)");
-      sunlight.addColorStop(1, "rgba(216,172,88,0)");
+      const lightColor = dark ? "170,197,232" : "216,172,88";
+      sunlight.addColorStop(0, `rgba(${lightColor},${dark ? 0.16 : 0.2})`);
+      sunlight.addColorStop(1, `rgba(${lightColor},0)`);
       ctx.fillStyle = sunlight;
       ctx.fillRect(0, 0, w, h);
       ctx.save();
@@ -105,8 +107,8 @@
       for (let i = 0; i < 5; i++) {
         const x = i * w * 0.16;
         const grad = ctx.createLinearGradient(x, 0, x + w * 0.18, h);
-        grad.addColorStop(0, "rgba(216,172,88,0.28)");
-        grad.addColorStop(1, "rgba(216,172,88,0)");
+        grad.addColorStop(0, `rgba(${lightColor},${dark ? 0.14 : 0.28})`);
+        grad.addColorStop(1, `rgba(${lightColor},0)`);
         ctx.fillStyle = grad;
         ctx.beginPath();
         ctx.moveTo(x, 0);
@@ -122,7 +124,7 @@
         p.x += Math.sin(time * 0.5 + p.phase) * dt * 7;
         if (p.y < 0) p.y = h;
         ctx.globalAlpha = 0.12 + Math.sin(time + p.phase) * 0.08;
-        ctx.fillStyle = "#b59652";
+        ctx.fillStyle = dark ? "#bacfeb" : "#b59652";
         ctx.beginPath();
         ctx.arc(p.x, p.y, 1 + p.s, 0, Math.PI * 2);
         ctx.fill();
@@ -163,7 +165,16 @@
   const panel = document.querySelector("#weatherPanel");
   const controls = document.querySelector(".weather-control");
   const options = [...document.querySelectorAll("[data-weather-mode]")];
+  const sunButton = options.find((button) => button.dataset.weatherMode === "sun");
+  const sunIcon = sunButton.querySelector("svg").cloneNode(true);
+  const moonIcon = document.querySelector(".theme-moon svg").cloneNode(true);
   function syncWeatherControl() {
+    sunButton.querySelector("[data-weather-label]").textContent = dark
+      ? "Moonlit"
+      : "Sunny";
+    sunButton
+      .querySelector("svg")
+      .replaceWith((dark ? moonIcon : sunIcon).cloneNode(true));
     options.forEach((button) => {
       const selected = button.dataset.weatherMode === mode;
       button.setAttribute("aria-pressed", String(selected));
@@ -216,6 +227,14 @@
     if (!controls.contains(event.relatedTarget)) closePanel();
   });
   document.body.dataset.weather = mode;
+  new MutationObserver(() => {
+    dark = document.documentElement.dataset.theme === "dark";
+    syncWeatherControl();
+    draw(0);
+  }).observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["data-theme"],
+  });
   syncWeatherControl();
   resize();
   sync();

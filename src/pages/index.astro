@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import "../styles/weather.css";
+import "../styles/theme.css";
 import feather from "feather-icons";
 const iconAttributes = {
   width: 20,
@@ -24,6 +25,19 @@ const linkedInUrl = "https://www.linkedin.com/in/zhangfanli/";
       content="Zhangfan Li's personal studio: software engineering, photography, and music."
     />
     <meta name="theme-color" content="#efede5" />
+    <script is:inline>
+      const hour = new Date().getHours();
+      const automaticTheme = hour >= 7 && hour < 19 ? "light" : "dark";
+      document.documentElement.dataset.theme = automaticTheme;
+      document.documentElement.dataset.themeSource = "auto";
+      try {
+        const savedTheme = localStorage.getItem("studio-theme");
+        if (savedTheme === "dark" || savedTheme === "light") {
+          document.documentElement.dataset.theme = savedTheme;
+          document.documentElement.dataset.themeSource = "manual";
+        }
+      } catch {}
+    </script>
     <meta property="og:title" content="Zhangfan Li" />
     <meta
       property="og:description"
@@ -48,9 +62,26 @@ const linkedInUrl = "https://www.linkedin.com/in/zhangfanli/";
     </div>
     <header>
       <div class="brand-group">
-        <a class="brand" href="#">
-          Zhangfan Li
-        </a>
+        <div class="brand-name">
+          <a class="brand" href="#">
+            Zhangfan Li
+          </a>
+          <button
+            id="themeToggle"
+            class="theme-toggle"
+            type="button"
+            aria-label="Dark mode"
+            aria-pressed="false"
+            title="Toggle dark mode"
+          >
+            <span class="theme-moon">
+              <Fragment set:html={feather.icons["moon"].toSvg(iconAttributes)} />
+            </span>
+            <span class="theme-sun">
+              <Fragment set:html={feather.icons["sun"].toSvg(iconAttributes)} />
+            </span>
+          </button>
+        </div>
         <div class="brand-actions">
           <button
             class="cv-trigger"
@@ -307,7 +338,7 @@ const linkedInUrl = "https://www.linkedin.com/in/zhangfanli/";
           ].map(({ mode, label, icon }) => (
             <button type="button" data-weather-mode={mode} aria-pressed="false">
               <Fragment set:html={feather.icons[icon].toSvg(iconAttributes)} />
-              <span>{label}</span>
+              <span data-weather-label>{label}</span>
               <span class="weather-selected" aria-hidden="true">
                 ✓
               </span>
@@ -339,5 +370,42 @@ const linkedInUrl = "https://www.linkedin.com/in/zhangfanli/";
       type="module"
       src={`${import.meta.env.BASE_URL.replace(/\/$/, "")}/studio.js`}
     ></script>
+    <script>
+      const toggle = document.querySelector<HTMLButtonElement>("#themeToggle");
+      const syncTheme = () => {
+        const dark = document.documentElement.dataset.theme === "dark";
+        toggle?.setAttribute("aria-pressed", String(dark));
+        toggle?.setAttribute(
+          "title",
+          dark ? "Switch to light mode" : "Switch to dark mode",
+        );
+        document
+          .querySelector('meta[name="theme-color"]')
+          ?.setAttribute("content", dark ? "#18231d" : "#efede5");
+      };
+      toggle?.addEventListener("click", () => {
+        const theme =
+          document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.dataset.themeSource = "manual";
+        try {
+          localStorage.setItem("studio-theme", theme);
+        } catch {}
+        syncTheme();
+      });
+      const updateAutomaticTheme = () => {
+        if (document.documentElement.dataset.themeSource !== "auto") return;
+        const hour = new Date().getHours();
+        document.documentElement.dataset.theme =
+          hour >= 7 && hour < 19 ? "light" : "dark";
+        syncTheme();
+      };
+      setInterval(updateAutomaticTheme, 60_000);
+      document.addEventListener("visibilitychange", () => {
+        if (!document.hidden) updateAutomaticTheme();
+      });
+      updateAutomaticTheme();
+      syncTheme();
+    </script>
   </body>
 </html>
