@@ -22,7 +22,7 @@ function run(raw) {
     music: "Opening music/ …",
     "cd photography/": "Opening photography/ …",
     "cd music/": "Opening music/ …",
-    github: "github.com/zekkaowo — use the GitHub link below.",
+    github: "github.com/zekkaowo — use the GitHub link beside my name.",
   };
   const line = document.createElement("div");
   line.textContent = "❯ " + command;
@@ -55,3 +55,8 @@ input.onkeydown = (e) => {
 };
 
 setupAmbient();
+
+const cvDialog = document.querySelector("#cvDialog");
+document.querySelector("#openCv").addEventListener("click", () => {
+  cvDialog.showModal();
+});

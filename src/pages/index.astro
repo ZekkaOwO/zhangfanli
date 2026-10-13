@@ -1,5 +1,15 @@
 ---
 import "../styles/global.css";
+import feather from "feather-icons";
+const iconAttributes = {
+  width: 20,
+  height: 20,
+  "stroke-width": 1.5,
+  "aria-hidden": "true",
+  focusable: "false",
+};
+
+const linkedInUrl = "https://www.linkedin.com/in/zhangfanli/";
 ---
 
 <!doctype html>
@@ -7,13 +17,13 @@ import "../styles/global.css";
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Zhangfan Li | Software Engineer · Photography & Music</title>
+    <title>Zhangfan Li</title>
     <meta
       name="description"
       content="Zhangfan Li's personal studio: software engineering, photography, and music."
     />
     <meta name="theme-color" content="#efede5" />
-    <meta property="og:title" content="Zhangfan Li | Personal Studio" />
+    <meta property="og:title" content="Zhangfan Li" />
     <meta
       property="og:description"
       content="A personal space for code, light, and sound."
@@ -24,9 +34,49 @@ import "../styles/global.css";
   </head>
   <body>
     <header>
-      <a class="brand" href="#">
-        Zhangfan Li
-      </a>
+      <div class="brand-group">
+        <a class="brand" href="#">
+          Zhangfan Li
+        </a>
+        <div class="brand-actions">
+          <button
+            class="cv-trigger"
+            id="openCv"
+            type="button"
+            aria-label="Open CV"
+            aria-haspopup="dialog"
+            aria-controls="cvDialog"
+            title="Open CV"
+          >
+            <Fragment set:html={feather.icons["file-text"].toSvg(iconAttributes)} />
+            <span>&lt;cv&gt;</span>
+          </button>
+          <a
+            class="linkedin-link"
+            href={linkedInUrl || undefined}
+            target={linkedInUrl ? "_blank" : undefined}
+            rel={linkedInUrl ? "noopener noreferrer" : undefined}
+            role="link"
+            aria-label="LinkedIn"
+            aria-disabled={linkedInUrl ? undefined : "true"}
+            title={linkedInUrl ? "Open LinkedIn" : "LinkedIn — coming soon"}
+          >
+            <Fragment set:html={feather.icons["linkedin"].toSvg(iconAttributes)} />
+            <span>&lt;Linkedin&gt;</span>
+          </a>
+          <a
+            class="github-link"
+            href="https://github.com/zekkaowo"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open GitHub profile"
+            title="Open GitHub"
+          >
+            <Fragment set:html={feather.icons["github"].toSvg(iconAttributes)} />
+            <span>&lt;Github&gt;</span>
+          </a>
+        </div>
+      </div>
       <nav aria-label="Main navigation">
         <span class="branch">⑂ main</span>
         <a href="#photography">01 / Photography</a>
@@ -209,15 +259,24 @@ import "../styles/global.css";
       </section>
       <div class="closing">
         <p>Made of code, light, and sound.</p>
-        <a href="https://github.com/zekkaowo" target="_blank" rel="noopener">
-          &lt;/&gt; Find me on GitHub ↗
-        </a>
       </div>
     </main>
     <footer>
-      <span>Zhangfan Li / PERSONAL STUDIO</span>
+      <span>Zhangfan Li</span>
       <span>CODE / LIGHT / SOUND</span>
     </footer>
+
+    <dialog id="cvDialog" class="cv-dialog" aria-labelledby="cvTitle">
+      <div class="cv-dialog-header">
+        <h2 id="cvTitle">CV</h2>
+        <form method="dialog">
+          <button class="cv-close" type="submit" aria-label="Close CV" autofocus>
+            <Fragment set:html={feather.icons["x"].toSvg(iconAttributes)} />
+          </button>
+        </form>
+      </div>
+      <div class="cv-content"></div>
+    </dialog>
 
     <script
       is:inline
