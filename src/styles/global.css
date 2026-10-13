@@ -108,6 +108,16 @@ nav {
 }
 
 /* Introduction and terminal */
+.typing-character {
+  visibility: hidden;
+}
+.typing-character.is-typed {
+  visibility: visible;
+}
+.typing-cursor {
+  box-shadow: 1px 0 currentColor;
+}
+
 .opening {
   display: grid;
   grid-template-columns: 1.2fr 1fr;
