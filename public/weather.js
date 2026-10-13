@@ -159,7 +159,64 @@
     paused = event.matches;
     sync();
   });
+  const trigger = document.querySelector("#weatherTrigger");
+  const panel = document.querySelector("#weatherPanel");
+  const controls = document.querySelector(".weather-control");
+  const options = [...document.querySelectorAll("[data-weather-mode]")];
+  function syncWeatherControl() {
+    options.forEach((button) => {
+      const selected = button.dataset.weatherMode === mode;
+      button.setAttribute("aria-pressed", String(selected));
+      if (selected) {
+        trigger
+          .querySelector("svg")
+          .replaceWith(button.querySelector("svg").cloneNode(true));
+        trigger.title = `Current weather: ${button.querySelector("span").textContent.trim()}`;
+      }
+    });
+  }
+  function setWeather(nextMode) {
+    if (!modes.includes(nextMode)) return;
+    mode = nextMode;
+    document.body.dataset.weather = mode;
+    syncWeatherControl();
+    seed();
+    draw(0);
+  }
+  function closePanel(restoreFocus = false) {
+    panel.hidden = true;
+    trigger.setAttribute("aria-expanded", "false");
+    if (restoreFocus) trigger.focus();
+  }
+  trigger.addEventListener("click", () => {
+    const opening = panel.hidden;
+    panel.hidden = !opening;
+    trigger.setAttribute("aria-expanded", String(opening));
+    if (opening) options.find((button) => button.dataset.weatherMode === mode)?.focus();
+  });
+  document
+    .querySelector("#weatherClose")
+    .addEventListener("click", () => closePanel(true));
+  options.forEach((button) =>
+    button.addEventListener("click", () => {
+      setWeather(button.dataset.weatherMode);
+      closePanel(true);
+    }),
+  );
+  document.addEventListener("pointerdown", (event) => {
+    if (!controls.contains(event.target)) closePanel();
+  });
+  controls.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !panel.hidden) {
+      event.preventDefault();
+      closePanel(true);
+    }
+  });
+  controls.addEventListener("focusout", (event) => {
+    if (!controls.contains(event.relatedTarget)) closePanel();
+  });
   document.body.dataset.weather = mode;
+  syncWeatherControl();
   resize();
   sync();
 })();

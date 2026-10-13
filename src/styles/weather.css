@@ -121,7 +121,126 @@ footer {
     flex-wrap: wrap;
   }
 }
+.weather-control {
+  position: fixed;
+  right: max(20px, env(safe-area-inset-right));
+  bottom: max(20px, env(safe-area-inset-bottom));
+  z-index: 20;
+  width: min(280px, calc(100vw - 32px));
+  color: #364033;
+}
+.weather-trigger,
+.weather-panel {
+  border: 1px solid #b5bfaa;
+  border-radius: 10px;
+  background: #f1f0e9;
+  box-shadow: 0 6px 24px #10251c30;
+}
+.weather-trigger {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 16px;
+  color: inherit;
+  text-align: left;
+  transition: background 160ms;
+}
+.weather-trigger > svg {
+  flex-shrink: 0;
+}
+.weather-question,
+.weather-action {
+  display: block;
+}
+.weather-question {
+  font-size: 10px;
+}
+.weather-action {
+  font-size: 12px;
+  font-weight: 600;
+}
+.weather-panel {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  width: 100%;
+  padding: 12px;
+  max-height: calc(100dvh - 110px);
+  overflow-y: auto;
+}
+.weather-panel[hidden] {
+  display: none;
+}
+.weather-panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-left: 4px;
+  font-size: 11px;
+}
+.weather-panel-heading button {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+}
+.weather-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.weather-options button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 10px;
+  border: 1px solid #bcc4b4;
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font-size: 11px;
+}
+.weather-selected {
+  margin-left: auto;
+  visibility: hidden;
+}
+.weather-options button[aria-pressed="true"] {
+  background: #364c3d;
+  color: #faf9f0;
+  border-color: #364c3d;
+}
+.weather-options button[aria-pressed="true"] .weather-selected {
+  visibility: visible;
+}
+.weather-trigger:hover,
+.weather-panel-heading button:hover,
+.weather-options button[aria-pressed="false"]:hover {
+  background: #e0e3d7;
+}
+.weather-control button:focus-visible {
+  outline: 2px solid #8b642c;
+  outline-offset: 3px;
+}
+@media (max-width: 640px) {
+  .weather-control {
+    right: max(16px, env(safe-area-inset-right));
+    bottom: max(16px, env(safe-area-inset-bottom));
+    width: 260px;
+  }
+  footer {
+    margin-bottom: 100px;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
+  .weather-trigger {
+    transition: none;
+  }
   .botanical-backdrop {
     transition: none;
   }

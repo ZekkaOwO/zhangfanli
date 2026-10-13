@@ -275,6 +275,48 @@ const linkedInUrl = "https://www.linkedin.com/in/zhangfanli/";
       <span>CODE / LIGHT / SOUND</span>
     </footer>
 
+    <aside class="weather-control" aria-label="Weather controls">
+      <button
+        id="weatherTrigger"
+        class="weather-trigger"
+        type="button"
+        aria-expanded="false"
+        aria-controls="weatherPanel"
+      >
+        <Fragment set:html={feather.icons["cloud"].toSvg(iconAttributes)} />
+        <span>
+          <span class="weather-question">A little weather for your mood.</span>
+          <span class="weather-action">
+            Change the weather <span aria-hidden="true">↗</span>
+          </span>
+        </span>
+      </button>
+      <div id="weatherPanel" class="weather-panel" hidden>
+        <div class="weather-panel-heading">
+          <span>Choose your weather</span>
+          <button id="weatherClose" type="button" aria-label="Close weather controls">
+            <Fragment set:html={feather.icons["x"].toSvg(iconAttributes)} />
+          </button>
+        </div>
+        <div class="weather-options" role="group" aria-label="Weather">
+          {[
+            { mode: "sun", label: "Sunny", icon: "sun" },
+            { mode: "rain", label: "Rainy", icon: "cloud-rain" },
+            { mode: "snow", label: "Snowy", icon: "cloud-snow" },
+            { mode: "fog", label: "Foggy", icon: "cloud" },
+          ].map(({ mode, label, icon }) => (
+            <button type="button" data-weather-mode={mode} aria-pressed="false">
+              <Fragment set:html={feather.icons[icon].toSvg(iconAttributes)} />
+              <span>{label}</span>
+              <span class="weather-selected" aria-hidden="true">
+                ✓
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </aside>
+
     <dialog id="cvDialog" class="cv-dialog" aria-labelledby="cvTitle">
       <div class="cv-dialog-header">
         <h2 id="cvTitle">CV</h2>
