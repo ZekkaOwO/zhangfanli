@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import "../styles/weather.css";
 import feather from "feather-icons";
 const iconAttributes = {
   width: 20,
@@ -33,6 +34,18 @@ const linkedInUrl = "https://www.linkedin.com/in/zhangfanli/";
     <link rel="canonical" href="https://zekkaowo.github.io/zhangfanli/" />
   </head>
   <body>
+    <div class="weather-scene" aria-hidden="true">
+      <img
+        class="botanical-backdrop"
+        src={`${import.meta.env.BASE_URL.replace(/\/$/, "")}/images/greenhouse-4k-v2.webp`}
+        alt=""
+        width="3840"
+        height="2160"
+        fetchpriority="high"
+      />
+      <div class="sky-tint"></div>
+      <canvas id="weather-canvas"></canvas>
+    </div>
     <header>
       <div class="brand-group">
         <a class="brand" href="#">
@@ -146,9 +159,7 @@ const linkedInUrl = "https://www.linkedin.com/in/zhangfanli/";
             <span>~/about</span>
             <span>PERSONAL NOTES</span>
           </div>
-          <h1>
-            A glimpse of my little world.
-          </h1>
+          <h1>A glimpse of my little world.</h1>
           <pre><code><span class="keyword">person</span> Zhangfan Li &#123;
   craft: <span class="string">"software engineering"</span>
   curiosity: <span class="keyword">always</span>
@@ -276,6 +287,11 @@ const linkedInUrl = "https://www.linkedin.com/in/zhangfanli/";
       <div class="cv-content"></div>
     </dialog>
 
+    <script
+      is:inline
+      type="module"
+      src={`${import.meta.env.BASE_URL.replace(/\/$/, "")}/weather.js`}
+    ></script>
     <script
       is:inline
       type="module"
