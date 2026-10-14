@@ -348,10 +348,20 @@ const linkedInUrl = "https://www.linkedin.com/in/zhangfanli/";
         </div>
         <div class="listening">
           <div class="deck">
-            <div class="record">
-              <div class="label">
-                <span>{t("side a")}</span>
+            <div class="turntable">
+              <div class="record">
+                <div class="label">
+                  <span>{t("side a")}</span>
+                </div>
               </div>
+              <svg class="tonearm" viewBox="0 0 225 225" aria-hidden="true">
+                <circle class="tonearm-base" cx="205" cy="25" r="12" />
+                <g class="tonearm-arm">
+                  <path class="tonearm-shaft" d="M205 25 L197 120 L180 151" />
+                  <path class="tonearm-head" d="M184 139 L175 155" />
+                  <circle class="tonearm-pivot" cx="205" cy="25" r="6" />
+                </g>
+              </svg>
             </div>
             <div class="deckcaption">{t("33⅓ RPM / A MOMENT TO LISTEN")}</div>
           </div>
