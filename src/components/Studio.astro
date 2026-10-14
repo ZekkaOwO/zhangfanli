@@ -63,6 +63,9 @@ const linkedInUrl = "https://www.linkedin.com/in/zhangfanli/";
     />
   </head>
   <body>
+    <button id="audioPrompt" class="audio-prompt" type="button">
+      {chinese ? "▶ 点击开启音乐" : "▶ Click to play music"}
+    </button>
     <div class="weather-scene" aria-hidden="true">
       <img
         class="botanical-backdrop"
@@ -77,21 +80,21 @@ const linkedInUrl = "https://www.linkedin.com/in/zhangfanli/";
     </div>
     <header>
       <div class="header-tools">
-          <button
-            id="themeToggle"
-            class="theme-toggle"
-            type="button"
-            aria-label={t("Dark mode")}
-            aria-pressed="false"
-            title={t("Toggle dark mode")}
-          >
-            <span class="theme-moon">
-              <Fragment set:html={feather.icons["moon"].toSvg(iconAttributes)} />
-            </span>
-            <span class="theme-sun">
-              <Fragment set:html={feather.icons["sun"].toSvg(iconAttributes)} />
-            </span>
-          </button>
+        <button
+          id="themeToggle"
+          class="theme-toggle"
+          type="button"
+          aria-label={t("Dark mode")}
+          aria-pressed="false"
+          title={t("Toggle dark mode")}
+        >
+          <span class="theme-moon">
+            <Fragment set:html={feather.icons["moon"].toSvg(iconAttributes)} />
+          </span>
+          <span class="theme-sun">
+            <Fragment set:html={feather.icons["sun"].toSvg(iconAttributes)} />
+          </span>
+        </button>
         <a
           class="language-switch"
           href={chinese ? home : home + "zh/"}
@@ -107,7 +110,6 @@ const linkedInUrl = "https://www.linkedin.com/in/zhangfanli/";
           <a class="brand" href="#">
             Zhangfan Li
           </a>
-
         </div>
         <div class="brand-actions">
           <button
@@ -149,7 +151,6 @@ const linkedInUrl = "https://www.linkedin.com/in/zhangfanli/";
         </div>
       </div>
       <nav aria-label={t("Main navigation")}>
-
         <span class="branch">⑂ main</span>
         <a href="#photography">{t("01 / Photography")}</a>
         <a href="#music">{t("02 / Music")}</a>
@@ -273,18 +274,14 @@ const linkedInUrl = "https://www.linkedin.com/in/zhangfanli/";
             <div class="deckcaption">{t("33⅓ RPM / A MOMENT TO LISTEN")}</div>
           </div>
           <div>
-            <div class="eyebrow">{t("AMBIENT SKETCHES / VOL. 01")}</div>
-            <h3 id="soundTitle">{t("A softer tempo.")}</h3>
-            <p>
-              {t(
-                "A small ambient experiment. Pick a mood, turn down the volume, and stay for\n              a moment.",
-              )}
-            </p>
+            <div class="eyebrow">{t("SELECTED TRACKS / VOL. 01")}</div>
+            <h3 id="soundTitle">Mariana</h3>
+            <p>{t("Pick a track, turn down the volume, and stay for a moment.")}</p>
             <div class="playrow">
               <button
                 class="play"
                 id="play"
-                aria-label={t("Play ambient music")}
+                aria-label={t("Play music")}
                 aria-pressed="false"
               >
                 ▷
@@ -306,18 +303,18 @@ const linkedInUrl = "https://www.linkedin.com/in/zhangfanli/";
               <span id="audioStatus" role="status">
                 {t("READY TO LISTEN")}
                 <br />
-                {t("SOFT CHORDS & SLOW MELODIES")}
+                MARIANA / 再谈记忆 / 花に亡霊
               </span>
             </div>
-            <div class="moods" aria-label={t("Sound moods")}>
-              <button aria-pressed="true" data-mood="0">
-                {t("01 / Still")}
+            <div class="moods" aria-label={t("Choose a track")}>
+              <button aria-pressed="true" data-track="0">
+                01 / Mariana
               </button>
-              <button aria-pressed="false" data-mood="1">
-                {t("02 / Warm")}
+              <button aria-pressed="false" data-track="1">
+                02 / 再谈记忆
               </button>
-              <button aria-pressed="false" data-mood="2">
-                {t("03 / Open")}
+              <button aria-pressed="false" data-track="2">
+                03 / 花に亡霊
               </button>
             </div>
             <div class="volume-control">
@@ -408,6 +405,70 @@ const linkedInUrl = "https://www.linkedin.com/in/zhangfanli/";
       src={`${import.meta.env.BASE_URL.replace(/\/$/, "")}/studio.js`}
     ></script>
     <script>
+      import { translations } from "../lib/translations.js";
+
+      const languageLink = document.querySelector<HTMLAnchorElement>(".language-switch")!;
+      const homePath = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
+      const normalize = (value: string) => value.trim().replace(/\s+/g, " ");
+      const english = new Map<string, string>();
+      const chineseText = new Map<string, string>();
+      for (const [en, zh] of Object.entries(translations)) {
+        english.set(normalize(zh), en);
+        chineseText.set(normalize(en), zh);
+      }
+      function setLanguage(chinese: boolean) {
+        document.dispatchEvent(new Event("studio:beforelanguagechange"));
+        const dictionary = chinese ? chineseText : english;
+        const translate = (value: string) => dictionary.get(normalize(value)) ?? value;
+        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+        while (walker.nextNode()) {
+          const node = walker.currentNode;
+          if (
+            node.parentElement?.closest(
+              "script, style, #audioStatus, #soundTitle, #output",
+            )
+          )
+            continue;
+          node.textContent = translate(node.textContent ?? "");
+        }
+        document
+          .querySelectorAll("[aria-label], [title], [placeholder], meta[content]")
+          .forEach((element) => {
+            for (const attribute of ["aria-label", "title", "placeholder", "content"]) {
+              const value = element.getAttribute(attribute);
+              if (value) element.setAttribute(attribute, translate(value));
+            }
+          });
+        document.documentElement.lang = chinese ? "zh-CN" : "en";
+        languageLink.href = chinese ? homePath : homePath + "zh/";
+        languageLink.lang = chinese ? "en" : "zh-CN";
+        languageLink.title = chinese ? "Switch to English" : "切换到中文";
+        languageLink.setAttribute("aria-label", languageLink.title);
+        const canonical =
+          "https://zekkaowo.github.io" + homePath + (chinese ? "zh/" : "");
+        document.querySelector('link[rel="canonical"]')?.setAttribute("href", canonical);
+        document
+          .querySelector('meta[property="og:url"]')
+          ?.setAttribute("content", canonical);
+        document.dispatchEvent(new Event("studio:languagechange"));
+      }
+      languageLink.addEventListener("click", (event) => {
+        if (
+          event.button !== 0 ||
+          event.metaKey ||
+          event.ctrlKey ||
+          event.shiftKey ||
+          event.altKey
+        )
+          return;
+        event.preventDefault();
+        history.pushState(null, "", languageLink.href);
+        setLanguage(document.documentElement.lang !== "zh-CN");
+      });
+      window.addEventListener("popstate", () => {
+        setLanguage(location.pathname === homePath + "zh/");
+      });
+
       const toggle = document.querySelector<HTMLButtonElement>("#themeToggle");
       const syncTheme = () => {
         const dark = document.documentElement.dataset.theme === "dark";
@@ -443,6 +504,7 @@ const linkedInUrl = "https://www.linkedin.com/in/zhangfanli/";
           hour >= 7 && hour < 19 ? "light" : "dark";
         syncTheme();
       };
+      document.addEventListener("studio:languagechange", syncTheme);
       setInterval(updateAutomaticTheme, 60_000);
       document.addEventListener("visibilitychange", () => {
         if (!document.hidden) updateAutomaticTheme();

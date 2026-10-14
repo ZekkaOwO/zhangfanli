@@ -1,5 +1,12 @@
 import { setupAmbient } from "./ambient.js";
-const chinese = document.documentElement.lang === "zh-CN";
+setupAmbient();
+let chinese = document.documentElement.lang === "zh-CN";
+document.addEventListener("studio:beforelanguagechange", () => {
+  [...activeTyping].forEach((finish) => finish());
+});
+document.addEventListener("studio:languagechange", () => {
+  chinese = document.documentElement.lang === "zh-CN";
+});
 
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const activeTyping = new Set();
@@ -140,8 +147,6 @@ input.onkeydown = (e) => {
     input.value = history[historyIndex] || "";
   }
 };
-
-setupAmbient();
 
 const cvDialog = document.querySelector("#cvDialog");
 document.querySelector("#openCv").addEventListener("click", () => {

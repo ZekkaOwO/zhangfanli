@@ -413,6 +413,23 @@ nav {
   gap: 16px;
   margin: 22px 0;
 }
+.audio-prompt {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 100;
+  padding: 12px 18px;
+  border: 1px solid #a79b83;
+  border-radius: 24px;
+  background: #efede5;
+  color: #40392e;
+  box-shadow: 0 4px 20px #0002;
+  font: 13px/1.5 var(--studio-font);
+  cursor: pointer;
+}
+.audio-prompt[hidden] {
+  display: none;
+}
 .play {
   border: 1px solid #a79b83;
   background: transparent;

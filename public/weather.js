@@ -199,6 +199,7 @@
     seed();
     draw(0);
   }
+  document.addEventListener("studio:languagechange", syncWeatherControl);
   function closePanel(restoreFocus = false) {
     panel.hidden = true;
     trigger.setAttribute("aria-expanded", "false");
