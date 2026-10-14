@@ -169,9 +169,14 @@
   const sunIcon = sunButton.querySelector("svg").cloneNode(true);
   const moonIcon = document.querySelector(".theme-moon svg").cloneNode(true);
   function syncWeatherControl() {
+    const chinese = document.documentElement.lang === "zh-CN";
     sunButton.querySelector("[data-weather-label]").textContent = dark
-      ? "Moonlit"
-      : "Sunny";
+      ? chinese
+        ? "月夜"
+        : "Moonlit"
+      : chinese
+        ? "晴天"
+        : "Sunny";
     sunButton
       .querySelector("svg")
       .replaceWith((dark ? moonIcon : sunIcon).cloneNode(true));
@@ -182,7 +187,7 @@
         trigger
           .querySelector("svg")
           .replaceWith(button.querySelector("svg").cloneNode(true));
-        trigger.title = `Current weather: ${button.querySelector("span").textContent.trim()}`;
+        trigger.title = `${chinese ? "当前天气" : "Current weather"}: ${button.querySelector("span").textContent.trim()}`;
       }
     });
   }

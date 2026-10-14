@@ -1,4 +1,5 @@
 import { setupAmbient } from "./ambient.js";
+const chinese = document.documentElement.lang === "zh-CN";
 
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const activeTyping = new Set();
@@ -86,20 +87,33 @@ function run(raw) {
     output.replaceChildren();
     return;
   }
-  const replies = {
-    help: "whoami · ls · photos · music · github · clear\nTip: ↑ and ↓ recall your commands.",
-    whoami: "Zhangfan Li / Software engineer\nOff the keyboard: photography & music.",
-    ls: "about.pseudo\nphotography/\nmusic/",
-    photos: "Opening photography/ …",
-    music: "Opening music/ …",
-    "cd photography/": "Opening photography/ …",
-    "cd music/": "Opening music/ …",
-    github: "github.com/zekkaowo — use the GitHub link beside my name.",
-  };
+  const replies = chinese
+    ? {
+        help: "whoami · ls · photos · music · github · clear\n提示：使用 ↑ 和 ↓ 查看历史命令。",
+        whoami: "Zhangfan Li / 软件工程师\n离开键盘之后：摄影与音乐。",
+        ls: "about.pseudo\nphotography/\nmusic/",
+        photos: "正在打开摄影区…",
+        music: "正在打开音乐区…",
+        "cd photography/": "正在打开摄影区…",
+        "cd music/": "正在打开音乐区…",
+        github: "github.com/zekkaowo — 点击名字旁的 GitHub 链接。",
+      }
+    : {
+        help: "whoami · ls · photos · music · github · clear\nTip: ↑ and ↓ recall your commands.",
+        whoami: "Zhangfan Li / Software engineer\nOff the keyboard: photography & music.",
+        ls: "about.pseudo\nphotography/\nmusic/",
+        photos: "Opening photography/ …",
+        music: "Opening music/ …",
+        "cd photography/": "Opening photography/ …",
+        "cd music/": "Opening music/ …",
+        github: "github.com/zekkaowo — use the GitHub link beside my name.",
+      };
   const line = document.createElement("div");
   line.textContent = "❯ " + command;
   const reply = document.createElement("pre");
-  reply.textContent = replies[command] || "Unknown command. Try help.";
+  reply.textContent =
+    replies[command] ||
+    (chinese ? "未知命令，请输入 help 查看帮助。" : "Unknown command. Try help.");
   output.append(line, reply);
   typeText(reply);
   while (output.children.length > 20) output.firstElementChild.remove();

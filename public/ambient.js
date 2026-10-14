@@ -23,6 +23,9 @@ const studies = [
   },
 ];
 const frequency = (midi) => 440 * 2 ** ((midi - 69) / 12);
+const chinese = document.documentElement.lang === "zh-CN";
+const chineseTitles = ["轻柔的节奏。", "温暖的午后。", "敞开的窗。"];
+const chineseMoods = ["宁静", "温暖", "开阔"];
 
 export function setupAmbient() {
   const play = document.querySelector("#play");
@@ -41,12 +44,22 @@ export function setupAmbient() {
     play.setAttribute("aria-pressed", String(playing));
     play.setAttribute(
       "aria-label",
-      playing ? "Pause ambient music" : "Play ambient music",
+      chinese
+        ? playing
+          ? "暂停氛围音乐"
+          : "播放氛围音乐"
+        : playing
+          ? "Pause ambient music"
+          : "Play ambient music",
     );
     play.textContent = playing ? "Ⅱ" : "▷";
-    status.textContent = playing
-      ? `PLAYING / ${studies[mood].name}`
-      : "PAUSED / AMBIENT STUDY";
+    status.textContent = chinese
+      ? playing
+        ? `播放中 / ${chineseMoods[mood]}`
+        : "已暂停 / 氛围音乐"
+      : playing
+        ? `PLAYING / ${studies[mood].name}`
+        : "PAUSED / AMBIENT STUDY";
   }
 
   function voice(current, midi, time, duration, level, pad = false) {
@@ -145,7 +158,9 @@ export function setupAmbient() {
       updatePlaying(true);
     } catch {
       stop();
-      status.textContent = "Audio could not start. Please try again.";
+      status.textContent = chinese
+        ? "音频未能启动，请重试。"
+        : "Audio could not start. Please try again.";
     } finally {
       starting = false;
       play.disabled = false;
@@ -167,7 +182,9 @@ export function setupAmbient() {
       document
         .querySelectorAll("[data-mood]")
         .forEach((item) => item.setAttribute("aria-pressed", String(item === button)));
-      document.querySelector("#soundTitle").textContent = studies[mood].title;
+      document.querySelector("#soundTitle").textContent = chinese
+        ? chineseTitles[mood]
+        : studies[mood].title;
       if (session) {
         stop();
         start();

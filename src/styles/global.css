@@ -2,6 +2,39 @@
 :root {
   --studio-font: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
 }
+html[lang="zh-CN"] {
+  --studio-font: "SFMono-Regular", Consolas, "Microsoft YaHei", "PingFang SC", monospace;
+}
+html[lang="zh-CN"] .welcomename,
+html[lang="zh-CN"] .codeintro h1 {
+  letter-spacing: 0;
+}
+.language-switch {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+}
+.language-switch svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+.language-switch:hover {
+  background: var(--theme-hover);
+}
+.header-tools {
+  position: absolute;
+  top: 8px;
+  right: 5%;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
 * {
   box-sizing: border-box;
 }
@@ -35,7 +68,9 @@ footer {
 
 /* Header: name, profile links, and navigation */
 header {
-  height: 84px;
+  position: relative;
+  height: 124px;
+  padding-top: 40px;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   grid-template-areas: "name profiles navigation";
@@ -567,7 +602,7 @@ body:has(.cv-dialog[open]) {
       "profiles profiles"
       "name navigation";
     gap: 8px 16px;
-    padding-top: 12px;
+    padding-top: 48px;
     padding-bottom: 12px;
   }
 }
