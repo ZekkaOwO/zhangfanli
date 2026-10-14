@@ -30,7 +30,8 @@ html[lang="zh-CN"] .codeintro h1 {
 .header-tools {
   position: absolute;
   top: 8px;
-  right: 5%;
+  /* Compensate for the 9px inset of the 18px icon in its 36px target. */
+  right: calc(var(--page-gutter, 5%) - 9px);
   display: flex;
   align-items: center;
   gap: 4px;

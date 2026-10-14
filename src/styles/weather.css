@@ -61,10 +61,11 @@ body[data-weather="fog"] .sky-tint {
 header,
 main,
 footer {
+  --page-gutter: 40px;
   position: relative;
   max-width: 880px;
-  padding-left: 40px;
-  padding-right: 40px;
+  padding-left: var(--page-gutter);
+  padding-right: var(--page-gutter);
   background: #f1f0e9ed;
 }
 header {
@@ -109,9 +110,10 @@ footer {
   header,
   main,
   footer {
+    --page-gutter: 18px;
     max-width: calc(100% - 24px);
-    padding-left: 18px;
-    padding-right: 18px;
+    padding-left: var(--page-gutter);
+    padding-right: var(--page-gutter);
   }
   header {
     height: auto;
