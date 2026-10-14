@@ -1,0 +1,392 @@
+.photo-wall {
+  --wall: #e8e5db;
+  --paper: #fffdf7;
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 44px 76px;
+  min-height: 450px;
+  padding: 66px 42px 60px;
+  margin: 0 0 36px;
+  border-radius: 12px;
+  background: radial-gradient(ellipse at 12% 0%, #fffdf4b0, transparent 68%), var(--wall);
+  box-shadow: inset 0 0 0 1px #70665312;
+}
+.photo-wall::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+    120deg,
+    transparent 35%,
+    #fff9e744 35.2%,
+    #fff9e744 48%,
+    transparent 48.2%
+  );
+}
+.photo-wall[data-style="paper"] {
+  background:
+    radial-gradient(ellipse at 5% 0%, #fff3d04d, transparent 65%),
+    radial-gradient(ellipse at 95% 100%, #78563726, transparent 60%),
+    url("./cork-texture.svg") repeat,
+    #bc996e;
+  box-shadow:
+    inset 0 0 0 1px #85684426,
+    inset 0 2px 4px #fff3d026,
+    inset 0 -12px 28px #82765b12;
+}
+.photo-wall[data-style="paper"]::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: inherit;
+  background: url("./paper-grain.svg") repeat;
+  mix-blend-mode: multiply;
+  opacity: 0.65;
+  pointer-events: none;
+}
+.photo-wall[data-style="paper"]::before {
+  background: linear-gradient(
+    120deg,
+    transparent 25%,
+    #fff9e74d 28%,
+    #fff9e74d 46%,
+    transparent 49%
+  );
+}
+[data-style="paper"] .polaroid {
+  background:
+    url("./paper-grain.svg") repeat,
+    var(--paper);
+  box-shadow:
+    0 1px 2px #3028181c,
+    3px 6px 8px #30281815,
+    10px 20px 28px #3028181c;
+}
+[data-style="paper"] .photo-tape {
+  background:
+    url("./paper-grain.svg") repeat,
+    var(--tape-pattern, linear-gradient(transparent, transparent)),
+    var(--tape-color, #c2c9aeaa);
+}
+[data-theme="dark"] .photo-wall[data-style="paper"] {
+  background:
+    radial-gradient(ellipse at 8% 0%, #d4ac7226, transparent 60%),
+    linear-gradient(#302c25b8, #302c25b8),
+    url("./cork-texture.svg") repeat,
+    #65533e;
+  box-shadow:
+    inset 0 0 0 1px #a7b39c16,
+    inset 0 -16px 35px #00000012;
+}
+[data-theme="dark"] .photo-wall[data-style="paper"]::before {
+  background: radial-gradient(ellipse at 85% 0%, #b7c8e51a, transparent 65%);
+}
+[data-theme="dark"] .photo-wall[data-style="paper"]::after {
+  mix-blend-mode: soft-light;
+  opacity: 0.4;
+}
+.polaroid {
+  position: relative;
+  width: min(100%, 390px);
+  margin: 0;
+  padding: 13px 13px 0;
+  background: var(--paper);
+  color: #696357;
+  transform: rotate(-3.5deg);
+  box-shadow:
+    1px 2px 3px #30281815,
+    7px 14px 20px #30281822;
+}
+.photo-tape {
+  position: absolute;
+  z-index: 1;
+  top: -15px;
+  left: calc(50% - 44px);
+  width: min(88px, 34%);
+  height: 30px;
+  transform: rotate(6deg);
+  background: #c2c9aeaa;
+  clip-path: polygon(
+    2% 0,
+    98% 2%,
+    100% 18%,
+    97% 40%,
+    100% 64%,
+    98% 82%,
+    100% 100%,
+    0 98%,
+    2% 76%,
+    0 51%,
+    3% 24%
+  );
+  pointer-events: none;
+}
+.polaroid a,
+.polaroid img {
+  display: block;
+}
+.polaroid img {
+  width: 100%;
+  height: auto;
+  background: #e6e0d3;
+}
+.polaroid figcaption {
+  display: block;
+  min-height: 65px;
+  padding: 1em 0 1.15em;
+  font: 14px/1.6 var(--studio-font);
+}
+[data-theme="dark"] .photo-wall {
+  --wall: #29342d;
+  --paper: #e8e4d9;
+  background:
+    radial-gradient(ellipse at 15% 10%, #bca67b18, transparent 65%), var(--wall);
+  box-shadow: inset 0 0 0 1px #a7b39c16;
+}
+[data-theme="dark"] .photo-wall::before {
+  background: radial-gradient(ellipse at 85% 0%, #b7c8e512, transparent 60%);
+}
+[data-theme="dark"] .polaroid {
+  box-shadow:
+    1px 3px 4px #0003,
+    8px 18px 25px #0005;
+}
+[data-theme="dark"] .photo-tape {
+  --tape-color: #97a58caa;
+}
+.polaroid-mountain .photo-tape {
+  --tape-color: #adc4cebb;
+  --tape-pattern: repeating-linear-gradient(135deg, #edf5ef40 0 3px, transparent 3px 9px);
+  left: 21%;
+  top: -12px;
+  width: min(96px, 38%);
+  height: 27px;
+  transform: rotate(-13deg);
+  clip-path: polygon(
+    0 3%,
+    98% 0,
+    100% 14%,
+    98% 29%,
+    100% 50%,
+    97% 73%,
+    100% 97%,
+    2% 100%,
+    0 81%,
+    3% 60%,
+    0 36%
+  );
+}
+.polaroid-cat .photo-tape {
+  --tape-color: #d5bc99b3;
+  left: -12px;
+  top: 3px;
+  width: min(66px, 33%);
+  height: 24px;
+  transform: rotate(-37deg);
+  clip-path: polygon(
+    0 0,
+    97% 2%,
+    100% 22%,
+    97% 44%,
+    100% 68%,
+    98% 100%,
+    1% 98%,
+    3% 73%,
+    0 48%,
+    2% 21%
+  );
+}
+.polaroid-cat .photo-tape-extra {
+  left: auto;
+  right: -13px;
+  top: 5px;
+  transform: rotate(34deg);
+  width: min(58px, 29%);
+}
+[data-theme="dark"] .polaroid-mountain .photo-tape {
+  --tape-color: #93acb9b3;
+}
+[data-theme="dark"] .polaroid-cat .photo-tape {
+  --tape-color: #bda37fb3;
+}
+.photo-wall {
+  display: grid;
+  grid-template-columns: 1.05fr 1.1fr 0.85fr;
+  gap: 36px 18px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+.photo-wall .polaroid {
+  width: 100%;
+  min-width: 0;
+  align-self: center;
+  transform: translateY(24px) rotate(-6deg);
+}
+.photo-wall .polaroid-mountain {
+  transform: translateY(-38px) rotate(5deg);
+}
+.photo-wall .polaroid-cat {
+  transform: translateY(18px) rotate(-4deg);
+  width: 94%;
+  justify-self: center;
+}
+.photo-wall .polaroid figcaption {
+  font-size: 14px;
+}
+@media (min-width: 601px) and (max-width: 850px) {
+  .photo-wall {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .photo-wall .polaroid-cat {
+    width: 75%;
+    transform: translateY(0) rotate(-4deg);
+  }
+}
+@media (max-width: 600px) {
+  .photo-wall {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .photo-wall .polaroid {
+    max-width: 360px;
+    justify-self: center;
+    width: 94%;
+    transform: rotate(-4deg);
+  }
+  .photo-wall .polaroid-mountain {
+    justify-self: end;
+    width: 92%;
+    transform: rotate(4deg);
+  }
+  .photo-wall .polaroid-cat {
+    width: 82%;
+  }
+  .photo-wall {
+    min-height: 0;
+    padding: 48px 24px 36px;
+    gap: 32px;
+  }
+  .polaroid {
+    width: min(100%, 360px);
+    transform: rotate(-2.5deg);
+    padding: 11px 11px 0;
+  }
+  .polaroid figcaption {
+    min-height: 58px;
+    font-size: 14px;
+  }
+}
+.polaroid a {
+  cursor: zoom-in;
+}
+.photo-dialog {
+  width: fit-content;
+  max-width: 94vw;
+  max-height: 94dvh;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #fffdf7;
+  box-shadow: none;
+  overflow: visible;
+}
+.photo-dialog::backdrop {
+  background: #101812cf;
+  backdrop-filter: blur(6px);
+}
+.photo-dialog-close {
+  position: fixed;
+  top: 12px;
+  right: 16px;
+  z-index: 1;
+}
+.photo-dialog button {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  font-size: 24px;
+}
+.photo-dialog button:hover {
+  background: #ffffff20;
+}
+.photo-preview {
+  margin: 0;
+  background:
+    url("./paper-grain.svg") repeat,
+    #fffdf7;
+  color: #696357;
+  box-shadow: 0 20px 70px #0005;
+  transform-origin: center;
+}
+.photo-preview figcaption {
+  display: block;
+  padding: 1em 0 1.15em;
+  font: 20px/1.6 var(--studio-font);
+}
+.polaroid figcaption strong,
+.photo-preview figcaption strong {
+  display: block;
+  font-size: 1em;
+  font-weight: 600;
+}
+.polaroid figcaption p,
+.photo-preview figcaption p {
+  margin: 0.45em 0 0;
+  font-size: 0.78em;
+  line-height: 1.7;
+  color: #827b6f;
+}
+.photo-preview img {
+  display: block;
+  max-width: 92vw;
+  max-height: 86dvh;
+  object-fit: contain;
+}
+.photo-dialog[open]::backdrop {
+  animation: photo-backdrop-in 420ms ease-out both;
+}
+.photo-dialog[open].is-closing::backdrop {
+  animation: photo-backdrop-out 420ms ease-in both;
+}
+.photo-dialog.is-closing .photo-dialog-close {
+  opacity: 0;
+}
+@keyframes photo-backdrop-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes photo-backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .photo-dialog[open],
+  .photo-dialog[open]::backdrop {
+    animation: none;
+  }
+}
+body:has(.photo-dialog[open]) {
+  overflow: hidden;
+}

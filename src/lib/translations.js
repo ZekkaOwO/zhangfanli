@@ -1,4 +1,20 @@
 export const translations = {
+  "The last light on the water.": "水面上的最后一抹光。",
+  "Sailboat masts become silhouettes as the sunset settles over the shore.":
+    "夕阳慢慢落向岸边，帆船的桅杆化作剪影。",
+  "A quiet world above the clouds.": "云端之上，静谧的世界。",
+  "Snow-covered ridges stretch into the distance beneath a wide winter sky.":
+    "辽阔的冬日天空下，覆雪的山脊延伸向远方。",
+  "An afternoon at its own pace.": "一个慢慢流逝的午后。",
+  "A guitar by the window, a sleeping cat, and a little room for stillness.":
+    "窗边的吉他、熟睡的猫咪，留一小片空间给安静。",
+  "Photo preview": "照片预览",
+  "Close photo preview": "关闭照片预览",
+  "Snow-covered mountain peaks beneath a cloudy sky": "云层下连绵的雪山",
+  "A sleeping cat curled up beside an acoustic guitar": "蜷睡在木吉他旁的猫咪",
+  "View full photograph": "查看完整照片",
+  "Sailboat masts and silhouettes by the water at sunset":
+    "夕阳下的水面、帆船桅杆与岸边剪影",
   "Zhangfan Li's personal studio: software engineering, photography, and music.":
     "Zhangfan Li 的个人空间：软件工程、摄影与音乐。",
   "A personal space for code, light, and sound.": "一个关于代码、光影与声音的个人空间。",

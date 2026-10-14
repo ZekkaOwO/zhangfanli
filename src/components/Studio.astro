@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import "../styles/weather.css";
 import "../styles/theme.css";
+import "../styles/photography.css";
 import feather from "feather-icons";
 import { translations } from "../lib/translations.js";
 const { locale = "en" } = Astro.props;
@@ -248,6 +249,87 @@ const linkedInUrl = "https://www.linkedin.com/in/zhangfanli/";
             )}
           </p>
         </div>
+        <div class="photo-wall" id="photoWall" data-style="paper">
+          <figure class="polaroid">
+            <span class="photo-tape" aria-hidden="true"></span>
+            <a
+              href={`${base}/images/img-2985.webp`}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={t("View full photograph")}
+            >
+              <img
+                src={`${base}/images/img-2985.webp`}
+                alt={t("Sailboat masts and silhouettes by the water at sunset")}
+                width="1800"
+                height="1350"
+                loading="lazy"
+                decoding="async"
+              />
+            </a>
+            <figcaption>
+              <strong>{t("The last light on the water.")}</strong>
+              <p>
+                {t(
+                  "Sailboat masts become silhouettes as the sunset settles over the shore.",
+                )}
+              </p>
+            </figcaption>
+          </figure>
+          <figure class="polaroid polaroid-mountain">
+            <span class="photo-tape" aria-hidden="true"></span>
+            <a
+              href={`${base}/images/dsc-0123.webp`}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={t("View full photograph")}
+            >
+              <img
+                src={`${base}/images/dsc-0123.webp`}
+                alt={t("Snow-covered mountain peaks beneath a cloudy sky")}
+                width="1800"
+                height="1200"
+                loading="lazy"
+                decoding="async"
+              />
+            </a>
+            <figcaption>
+              <strong>{t("A quiet world above the clouds.")}</strong>
+              <p>
+                {t(
+                  "Snow-covered ridges stretch into the distance beneath a wide winter sky.",
+                )}
+              </p>
+            </figcaption>
+          </figure>
+          <figure class="polaroid polaroid-cat">
+            <span class="photo-tape" aria-hidden="true"></span>
+            <span class="photo-tape photo-tape-extra" aria-hidden="true"></span>
+            <a
+              href={`${base}/images/img-4118.webp`}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={t("View full photograph")}
+            >
+              <img
+                src={`${base}/images/img-4118.webp`}
+                alt={t("A sleeping cat curled up beside an acoustic guitar")}
+                width="1350"
+                height="1800"
+                loading="lazy"
+                decoding="async"
+              />
+            </a>
+            <figcaption>
+              <strong>{t("An afternoon at its own pace.")}</strong>
+              <p>
+                {t(
+                  "A guitar by the window, a sleeping cat, and a little room for stillness.",
+                )}
+              </p>
+            </figcaption>
+          </figure>
+        </div>
       </section>
       <section class="musicsection" id="music" aria-labelledby="musicHeading">
         <div class="sectiontop">
@@ -382,6 +464,17 @@ const linkedInUrl = "https://www.linkedin.com/in/zhangfanli/";
       </div>
     </aside>
 
+    <dialog id="photoDialog" class="photo-dialog" aria-label={t("Photo preview")}>
+      <form method="dialog" class="photo-dialog-close">
+        <button type="submit" aria-label={t("Close photo preview")} autofocus>
+          ×
+        </button>
+      </form>
+      <figure class="photo-preview">
+        <img id="photoPreviewImage" alt="" />
+        <figcaption id="photoPreviewCaption"></figcaption>
+      </figure>
+    </dialog>
     <dialog id="cvDialog" class="cv-dialog" aria-labelledby="cvTitle">
       <div class="cv-dialog-header">
         <h2 id="cvTitle">{t("CV")}</h2>

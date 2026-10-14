@@ -41,6 +41,7 @@ html[lang="zh-CN"] .codeintro h1 {
 }
 html {
   scroll-behavior: smooth;
+  scrollbar-gutter: stable;
 }
 body {
   margin: 0;
